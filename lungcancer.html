@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>There Is Nothing Truly As Cruel As Lung Cancer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #111110;
+      --ink-mid: #3d3c39;
+      --ink-light: #7a7670;
+      --ink-faint: #d4d0c8;
+      --page: #ffffff;
+      --page-warm: #f5f3ef;
+      --accent: #c0392b;
+      --serif: 'Playfair Display', Georgia, serif;
+      --body: 'Source Serif 4', Georgia, serif;
+    }
+    html { background: var(--page-warm); }
+    body {
+      background: var(--page);
+      color: var(--ink);
+      font-family: var(--body);
+      font-size: 19px;
+      line-height: 1.75;
+      font-weight: 300;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+      min-height: 100vh;
+    }
+    .top-rule {
+      border-top: 4px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+      padding: 0.4rem 0;
+      margin: 2rem 0 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      font-family: var(--serif);
+    }
+    .section-tag {
+      background: var(--accent);
+      color: #fff;
+      padding: 2px 8px;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-family: var(--serif);
+    }
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(30px, 6vw, 52px);
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+    .deck {
+      font-family: var(--body);
+      font-size: 20px;
+      font-weight: 300;
+      color: var(--ink-mid);
+      line-height: 1.5;
+      margin-bottom: 1.25rem;
+    }
+    .byline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.5rem;
+      font-size: 13px;
+      color: var(--ink-light);
+      border-top: 1px solid var(--ink-faint);
+      border-bottom: 1px solid var(--ink-faint);
+      padding: 0.6rem 0;
+      margin-bottom: 1.75rem;
+    }
+    .byline .author { color: var(--ink-mid); font-weight: 400; }
+    p { margin-bottom: 1.3rem; }
+    .lede {
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 1.65;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+    }
+    .placeholder {
+      color: var(--ink-faint);
+      font-style: italic;
+      border: 1px dashed var(--ink-faint);
+      padding: 0.75rem 1rem;
+      border-radius: 3px;
+      font-size: 15px;
+      margin-bottom: 1.3rem;
+      line-height: 1.6;
+    }
+    h2 {
+      font-family: var(--serif);
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--ink);
+      margin: 3rem 0 0.75rem;
+      border-top: 2px solid var(--ink-faint);
+      padding-top: 1.25rem;
+    }
+    h3 {
+      font-family: var(--serif);
+      font-size: 19px;
+      font-weight: 700;
+      font-style: italic;
+      color: var(--ink-mid);
+      margin: 2rem 0 0.6rem;
+    }
+    .pull-quote {
+      font-family: var(--serif);
+      font-size: clamp(20px, 3vw, 26px);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.4;
+      color: var(--ink);
+      border-left: 4px solid var(--accent);
+      padding: 0.5rem 0 0.5rem 1.25rem;
+      margin: 2.5rem 0;
+    }
+    .stat-row {
+      display: flex;
+      gap: 1px;
+      margin: 2rem 0;
+      background: var(--ink-faint);
+    }
+    .stat-box {
+      flex: 1;
+      background: var(--page-warm);
+      padding: 1rem 1.25rem;
+      text-align: center;
+    }
+    .stat-number {
+      font-family: var(--serif);
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--ink);
+      display: block;
+      margin-bottom: 4px;
+    }
+    .stat-number.red { color: var(--accent); }
+    .stat-number.green { color: #1D9E75; }
+    .stat-label {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      font-family: var(--serif);
+    }
+    .figure {
+      margin: 2.5rem 0;
+      border-top: 2px solid var(--ink);
+      padding-top: 1rem;
+    }
+    .figure-kicker {
+      font-family: var(--serif);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 0.4rem;
+    }
+    .figure-hed {
+      font-family: var(--serif);
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+    }
+    .figure-caption {
+      font-size: 13px;
+      color: var(--ink-light);
+      font-style: italic;
+      margin-top: 0.75rem;
+      line-height: 1.5;
+      border-top: 1px solid var(--ink-faint);
+      padding-top: 0.5rem;
+    }
+    .chart-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 10px;
+      font-size: 12px;
+      color: var(--ink-mid);
+    }
+    .chart-legend span { display: flex; align-items: center; gap: 6px; }
+    .legend-swatch { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+    .chart-wrapper { position: relative; width: 100%; height: 300px; }
+    .chart-wrapper-tall { position: relative; width: 100%; height: 360px; }
+    .figure img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border: 1px solid var(--ink-faint);
+      border-radius: 3px;
+    }
+    .data-table-wrap { overflow-x: auto; margin: 0.5rem 0 0.75rem; }
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      font-family: var(--body);
+    }
+    .data-table th {
+      background: var(--ink);
+      color: #fff;
+      padding: 6px 10px;
+      text-align: left;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      font-size: 12px;
+    }
+    .data-table th.num { text-align: right; }
+    .data-table td {
+      padding: 5px 10px;
+      border-bottom: 1px solid var(--ink-faint);
+      color: var(--ink-mid);
+      vertical-align: top;
+    }
+    .data-table td.num { text-align: right; }
+    .data-table tr.subtype-header td {
+      font-weight: 700;
+      color: var(--ink);
+      background: var(--page-warm);
+      padding-top: 8px;
+    }
+    .data-table tr.total-row td {
+      font-weight: 700;
+      color: var(--ink);
+      border-top: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+    }
+    .patient-count-row {
+      display: flex;
+      gap: 1px;
+      margin: 1.5rem 0;
+      background: var(--ink-faint);
+    }
+    .patient-box {
+      flex: 1;
+      background: var(--page-warm);
+      padding: 0.75rem 1rem;
+      text-align: center;
+    }
+    .patient-n {
+      font-family: var(--serif);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--ink);
+      display: block;
+      line-height: 1;
+      margin-bottom: 3px;
+    }
+    .patient-label {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      font-family: var(--serif);
+    }
+    ul.body-list {
+      padding-left: 1.5rem;
+      margin-bottom: 1.3rem;
+      color: var(--ink-mid);
+      font-size: 17px;
+    }
+    ul.body-list li { margin-bottom: 0.4rem; }
+    .section-label {
+      font-family: var(--serif);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 3rem 0 0.5rem;
+      display: block;
+    }
+    .works-cited {
+      margin-top: 3rem;
+      border-top: 2px solid var(--ink-faint);
+      padding-top: 1.5rem;
+    }
+    .works-cited h2 { border-top: none; padding-top: 0; margin-top: 0; }
+    .works-cited ol {
+      padding-left: 1.5rem;
+      font-size: 14px;
+      color: var(--ink-mid);
+      line-height: 1.7;
+    }
+    .works-cited li { margin-bottom: 0.5rem; }
+    .works-cited a { color: var(--accent); text-decoration: none; }
+    .works-cited a:hover { text-decoration: underline; }
+    .tags {
+      margin: 2.5rem 0 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 12px;
+    }
+    .tag {
+      border: 1px solid var(--ink-faint);
+      padding: 3px 10px;
+      border-radius: 2px;
+      color: var(--ink-mid);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-family: var(--serif);
+    }
+    .article-footer {
+      border-top: 3px solid var(--ink);
+      margin-top: 3rem;
+      padding-top: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--ink-light);
+      letter-spacing: 0.06em;
+      font-family: var(--serif);
+    }
+    @media (max-width: 600px) {
+      body { padding: 0 1rem 4rem; font-size: 17px; }
+      .stat-row, .patient-count-row { flex-direction: column; gap: 1px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-rule">
+    <span class="section-tag">Health &amp; Science</span>
+  </div>
+
+  <h1>There Is Nothing Truly As Cruel As Lung Cancer</h1>
+  <p class="deck">A dataset of 1,500 patients reveals that survival from lung cancer depends not just on whether you smoked but more on the invisible structural forces that shapes who gets diagnosed, and when.</p>
+
+  <div class="byline">
+    <span class="author">By: Emily Chen</span>
+    <span>[DIDA-345-01]</span>
+    <span>[May 13, 2026]</span>
+  </div>
+  <p class="lede">There is nothing truly as cruel as lung cancer. It may be the cause of our own consequences — but for some cases, that is not the only cause. It can be known in just hours: knowing you may not even pass the night.</p>
+
+  <p>This illness arrives quietly, with small symptoms slowly creeping in. From the small cough you may disregard, or the shortness of breath from walking upstairs. The fatigue from work, aging, stress, or lack of sleep. Then from the small coughs to consistent coughs, then the coughing fits — unable to even breathe.</p>
+
+  <p>An infection from a flu that you disregard sends you to the emergency room. You look for the cause of your symptoms, thinking maybe this year's cold is just a bit more severe than previous cases. With your hospitalization you found out that you were right — you had pneumonia, a more severe complication of the flu, and your air sacs are filled with fluids or pus. You are now under hospital care with strict antibiotics.</p>
+
+  <p>They respond. After the rounds of antibiotics are over, you may be discharged. However, your symptoms got worse and you had to have an oxygen tank just to breathe. The fluids removed from your lungs get tested. Then the scans, with results&hellip;</p>
+
+  <p>Lung cancer is not just cancer. It has one of the highest mortality rates in the world, yet it is still misunderstood. The predominant stereotype for those diagnosed is that it must have been mainly caused by cigarettes. This prejudice shapes public policy down to personal sympathy — perception hardening into the belief that lung cancer is more simple, predictable, and preventable than we think.</p>
+
+  <div class="pull-quote">"Yet, data tells a more complicated story."</div>
+
+  <p>Data on a project analyzing 1,500 patient records across global regions, treatment types, survival outcomes, environmental exposures, and smoking status showed some patients may have smoked heavily throughout most of their lives — but others never smoked at all. Some had an early diagnosis that prevented fatality, but others were not fortunate enough when they realized they had Stage IV cancer only after months of their symptoms worsening.</p>
+
+  <p>Statistics is not just a number. There is a story behind every person trying to live normally as their body quietly changes and succumbs to disease. Data allow us to understand patterns in how survival depends on invisible conditions surrounding everyday life — such as the simple air that we breathe, the conditions of the jobs they work, their accessibility to healthcare and whether that covers screening for cancer, and how seriously their symptoms may be assessed by themselves or by primary care physicians.</p>
+
+  <p>Lung cancer is often discussed as a personal failure. Yet data suggests it is more structural. <strong>This changes the story entirely.</strong></p>
+
+  <p>As lung cancer remains one of the deadliest cancers in the world, ranking among the leading causes of cancer-related deaths globally according to the World Health Organization and the American Cancer Society, it is crucial to understand how it works and why it matters. The reason for the high mortality rate is that symptoms are hard to diagnose, often appearing too late. The persistent coughing, chest pain, fatigue, coughing blood, or breathing difficulty may not become severe enough until the disease has already progressed to a state that can no longer be reversed.</p>
+
+  <p>Lung cancer is divided into two major categories:</p>
+  <ul class="body-list">
+    <li><strong>Non-Small Cell Lung Cancer (NSCLC)</strong> — accounts for the majority of cases, including subtypes like adenocarcinoma and squamous cell carcinoma.</li>
+    <li><strong>Small Cell Lung Cancer (SCLC)</strong> — tends to spread more aggressively and has a stronger link to heavy smoking.</li>
+  </ul>
+
+  <p>Although cigarette smoking is undoubtedly the most significant risk factor, it does not remain the only causative agent. People across a wide range of experiences from exposure to secondhand smoke, to occupational hazard exposure, air pollution, genetic mutations, previous cancer history, radon, and asbestos exposure can still be considered at risk.</p>
+
+  <p>This shifts perspective and allows a broader mind in medical research. Physicians can link high numbers of lung cancer cases in non-smokers to long-term air pollution. The stigma surrounding lung cancer needs to be broken down and public empathy improved — compared to breast cancer, which generates collective solidarity and survivorship, the prejudice against lung cancer is preventing effective funding, awareness, and public attention on this mortal disease.</p>
+
+  <p>The data of this project not only help us move beyond our stereotypes they allow us to examine what develops lung cancer, how certain factors shape an outcome, and how survival at a higher rate depends heavily on early detection.</p>
+
+ 
+  <h2>Smoking Status and What the Numbers Really Say</h2>
+
+  <div class="patient-count-row">
+    <div class="patient-box">
+      <span class="patient-n">1,500</span>
+      <span class="patient-label">Total patients</span>
+    </div>
+    <div class="patient-box">
+      <span class="patient-n">979</span>
+      <span class="patient-label">Never smoked</span>
+    </div>
+    <div class="patient-box">
+      <span class="patient-n">364</span>
+      <span class="patient-label">Current smokers</span>
+    </div>
+    <div class="patient-box">
+      <span class="patient-n">157</span>
+      <span class="patient-label">Former smokers</span>
+    </div>
+  </div>
+
+  <!-- Chart 1: Survival by smoking status -->
+  <div class="figure">
+    <div class="figure-kicker">Chart 1</div>
+    <div class="figure-hed">Survival rates drop sharply with smoking history</div>
+    <div class="chart-legend">
+      <span><span class="legend-swatch" style="background:#1D9E75;"></span>Never smokers</span>
+      <span><span class="legend-swatch" style="background:#378ADD;"></span>Former smokers</span>
+      <span><span class="legend-swatch" style="background:#E24B4A;"></span>Current smokers</span>
+    </div>
+    <div class="chart-wrapper">
+      <canvas id="smokingChart" role="img" aria-label="Bar chart: never smokers 42%, former smokers 32%, current smokers 24% survival rate">Survival rates: never smokers 42%, former smokers 32%, current smokers 24%.</canvas>
+    </div>
+    <p class="figure-caption">Survival rates (%) by smoking status across 1,500 patient records.</p>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-box">
+      <span class="stat-number green">42%</span>
+      <span class="stat-label">Never smokers</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-number">32%</span>
+      <span class="stat-label">Former smokers</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-number red">24%</span>
+      <span class="stat-label">Current smokers</span>
+    </div>
+  </div>
+
+  <p>Smoking and survival outcomes have a clear relationship. At first glance the results are unsurprisingly clear, smoking damages lung tissue, increases mutation rates, and weakens the body's ability to recover from cancer treatment. But hidden in the numbers is something more striking: the largest group in the dataset is never-smokers.</p>
+
+  <p>This means the majority of lung cancer cases in the dataset occurred among people who never smoked at all. That statistic completely disrupts one of the most persistent assumptions surrounding the disease. The numbers force an uncomfortable question; if most people in this dataset never smoked, why do so many people still think lung cancer only happens to smokers?</p>
+
+  <p>For decades, anti-smoking campaigns unintentionally shaped the public understanding of lung cancer into something morally simplified, smokers get lung cancer, non-smokers do not. Reality reflected in this dataset is more complicated.</p>
+
+  <p>Environmental exposure increasingly plays a major role in diagnosis patterns. Air pollution exposure levels appear frequently throughout the dataset, particularly among patients in urbanized WHO regions. Research from organizations like the WHO and the Environmental Protection Agency has increasingly connected fine particulate matter pollution to elevated cancer risk. In practical terms, this means a person may spend years breathing carcinogenic particles without ever touching a cigarette.</p>
+
+  <!-- Pivot table -->
+  <div class="figure">
+    <div class="figure-kicker">Table 1</div>
+    <div class="figure-hed">NSCLC subtype by smoking status and cancer stage</div>
+    <div class="data-table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>NSCLC subtype</th>
+            <th>Smoking status</th>
+            <th class="num">Stage I</th>
+            <th class="num">Stage II</th>
+            <th class="num">Stage III</th>
+            <th class="num">Stage IV</th>
+            <th class="num">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="subtype-header"><td colspan="7">Adenocarcinoma</td></tr>
+          <tr><td></td><td>Current smoker</td><td class="num">22</td><td class="num">27</td><td class="num">38</td><td class="num">54</td><td class="num">141</td></tr>
+          <tr><td></td><td>Former smoker</td><td class="num">22</td><td class="num">13</td><td class="num">24</td><td class="num">17</td><td class="num">76</td></tr>
+          <tr><td></td><td>Never smoked</td><td class="num">225</td><td class="num">163</td><td class="num">126</td><td class="num">119</td><td class="num">633</td></tr>
+          <tr class="subtype-header"><td colspan="2">Adenocarcinoma total</td><td class="num">269</td><td class="num">203</td><td class="num">188</td><td class="num">190</td><td class="num">850</td></tr>
+          <tr class="subtype-header"><td colspan="7">Large cell</td></tr>
+          <tr><td></td><td>Current smoker</td><td class="num">4</td><td class="num">5</td><td class="num">16</td><td class="num">11</td><td class="num">36</td></tr>
+          <tr><td></td><td>Former smoker</td><td class="num">5</td><td class="num">3</td><td class="num">2</td><td class="num">12</td><td class="num">22</td></tr>
+          <tr><td></td><td>Never smoked</td><td class="num">53</td><td class="num">41</td><td class="num">23</td><td class="num">28</td><td class="num">145</td></tr>
+          <tr class="subtype-header"><td colspan="2">Large cell total</td><td class="num">62</td><td class="num">49</td><td class="num">41</td><td class="num">51</td><td class="num">203</td></tr>
+          <tr class="subtype-header"><td colspan="7">Not applicable</td></tr>
+          <tr><td></td><td>Current smoker</td><td class="num">8</td><td class="num">18</td><td class="num">33</td><td class="num">30</td><td class="num">89</td></tr>
+          <tr><td></td><td>Former smoker</td><td class="num">2</td><td class="num">2</td><td class="num">4</td><td class="num">3</td><td class="num">11</td></tr>
+          <tr><td></td><td>Never smoked</td><td class="num">16</td><td class="num">18</td><td class="num">13</td><td class="num">18</td><td class="num">65</td></tr>
+          <tr class="subtype-header"><td colspan="2">Not applicable total</td><td class="num">26</td><td class="num">38</td><td class="num">50</td><td class="num">51</td><td class="num">165</td></tr>
+          <tr class="subtype-header"><td colspan="7">Squamous cell</td></tr>
+          <tr><td></td><td>Current smoker</td><td class="num">14</td><td class="num">20</td><td class="num">32</td><td class="num">32</td><td class="num">98</td></tr>
+          <tr><td></td><td>Former smoker</td><td class="num">7</td><td class="num">15</td><td class="num">14</td><td class="num">12</td><td class="num">48</td></tr>
+          <tr><td></td><td>Never smoked</td><td class="num">58</td><td class="num">31</td><td class="num">26</td><td class="num">21</td><td class="num">136</td></tr>
+          <tr class="subtype-header"><td colspan="2">Squamous cell total</td><td class="num">79</td><td class="num">66</td><td class="num">72</td><td class="num">65</td><td class="num">282</td></tr>
+          <tr class="total-row">
+            <td colspan="2">Grand total</td>
+            <td class="num">436</td><td class="num">356</td><td class="num">351</td><td class="num">357</td><td class="num">1,500</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="figure-caption">Patient counts by NSCLC subtype, smoking status, and cancer stage. Adenocarcinoma is the dominant subtype across all stages, and never-smokers constitute the largest smoking-status group in every category. Source: Project data of a clinical dataset from the years of 2015-2025 across 6 WHO regions and 60 countries, n&nbsp;=&nbsp;1,500.</p>
+  </div>
+
+  <p>The table above reinforces what the charts show, across every subtype and every stage, never-smokers make up the largest share of patients. Adenocarcinoma alone accounts for 850 of 1,500 cases. Within that subtype, 633 patients had never smoked, compared to just 141 current smokers and 76 former smokers.</p>
+
+  <h3>The prejudice and shame attached to the disease</h3>
+
+  <p>A diagnosis of lung cancer often arrives with emotional isolation. Patients who never smoked regularly describe feeling as though they have to defend themselves after diagnosis. Advocacy organizations and survivor interviews repeatedly show the same pattern: people ask whether they smoked before they ask how they are doing.</p>
+
+  <p>That response reveals how morality became attached to the disease. Other forms of cancer are usually treated as tragedy. Lung cancer is often treated as consequence.</p>
+
+  <div class="pull-quote">"The stigma matters because it shapes funding, awareness, and empathy."</div>
+
+  <p>Lung cancer kills enormous numbers of people every year, yet it historically received less public attention than several other major cancers. Patients frequently describe feeling invisible within larger cancer conversations. The dataset exposes how outdated the stereotype has become. Many patients here were exposed to secondhand smoke for years without choosing it themselves. Others lived in highly polluted regions. Some worked around dangerous industrial materials. Their risk accumulated slowly through ordinary routines.</p>
+
+  <p>A person can spend decades breathing toxic air without realizing damage is building inside their lungs. That is what makes the disease frightening. The danger is often invisible until it becomes impossible to ignore.</p>
+
+  <h3>Environmental exposure and industrial risk</h3>
+
+  <p>One of the most striking parts of the dataset is the number of environmental and occupational variables attached to patient outcomes. These include:</p>
+  <ul class="body-list">
+    <li>Asbestos exposure</li>
+    <li>Radon exposure</li>
+    <li>Occupational hazard exposure</li>
+    <li>Air pollution exposure</li>
+  </ul>
+
+  <p>Historically, industrial workers experienced some of the highest rates of exposure to carcinogens. Construction workers, miners, factory workers, and shipyard employees often inhaled asbestos fibers for years before regulations tightened. Even after legal restrictions, many older buildings still contain asbestos materials. Exposure continues during renovations, demolitions, and unsafe labor practices.</p>
+
+  <p>Radon presents another invisible threat. Because it is odorless and naturally occurring, many households never realize they are being exposed. According to the EPA, radon remains one of the leading causes of lung cancer among non-smokers.</p>
+
+  <p>These environmental risks reveal how lung cancer is often tied to geography and labor systems. People may inherit risk not through genetics, but through the places they live and the jobs they work. The disease becomes a reflection of industrial society itself.</p>
+
+ 
+  <h2>Early Detection Versus Late Diagnosis</h2>
+  <div class="figure">
+    <div class="figure-kicker">Chart 2</div>
+    <div class="figure-hed">The difference between Stage I and Stage IV feels almost cruel</div>
+    <div class="chart-wrapper">
+      <canvas id="stageChart" role="img" aria-label="Bar chart showing survival rates by cancer stage: Stage I 71%, Stage II 50%, Stage III 15%, Stage IV 4%">Survival rates by stage: Stage I 71%, Stage II 50%, Stage III 15%, Stage IV 4%.</canvas>
+    </div>
+    <p class="figure-caption">Approximate survival rates (%) by cancer stage. Dataset: 1,500 patient records in clinical dataset from the years of 2015-2025 across 6 WHO regions and 60 countries.</p>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-box">
+      <span class="stat-number green">71%</span>
+      <span class="stat-label">Stage I</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-number">50%</span>
+      <span class="stat-label">Stage II</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-number">15%</span>
+      <span class="stat-label">Stage III</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-number red">4%</span>
+      <span class="stat-label">Stage IV</span>
+    </div>
+  </div>
+
+  <p>Cancer stage proved to be one of the strongest predictors of survival. A patient diagnosed early may undergo surgery and continue living for years. Another patient, diagnosed only months later after the cancer spreads, may suddenly find themselves discussing survival timelines instead of recovery.</p>
+
+  <p>Patients diagnosed at Stage I often survived because treatment occurred before widespread metastasis. Stage IV patients faced dramatically lower survival rates due to advanced spread throughout the body. This finding reinforces one of the largest challenges in lung cancer treatment: the disease is usually detected too late.</p>
+
+  <p>Unlike some cancers that can be discovered through visible symptoms or routine screening, lung cancer often develops quietly. Early symptoms may resemble common respiratory illnesses. By the time severe symptoms emerge, the cancer may already be advanced.</p>
+
+  <h3>Screening and detection</h3>
+
+  <p>The dataset includes several diagnosis methods: CT scans, biopsies, and LDCT (low-dose CT) screening. Low-dose CT screening has become increasingly important because it allows doctors to detect tumors earlier in high-risk populations. Research shows LDCT screening can significantly reduce mortality by identifying cancers before metastasis occurs.</p>
+
+  <p>Yet access to screening remains uneven. People without regular healthcare access may delay checkups for years. Rural populations often face longer travel times to screening facilities. Low-income patients may avoid preventative care entirely because of cost. This means survival is not determined solely by biology. It is shaped by infrastructure.</p>
+
+  <div class="pull-quote">"A patient diagnosed at Stage I and treated immediately enters a completely different reality from a patient diagnosed at Stage IV after months of untreated symptoms."</div>
+
+  <p>Cancer staging also changes the emotional experience of treatment. Early-stage diagnoses may lead to surgery and the possibility of remission. Late-stage diagnoses frequently involve palliative care, intensive chemotherapy, or attempts to slow progression rather than eliminate the disease. The psychological difference between "treatable" and "terminal" can emerge in a single doctor's appointment.</p>
+
+  <p>Families often describe the shock of realizing symptoms they ignored for months from symptoms including fatigue, to chronic coughing, or shortness of breath, they were all signs of something life-threatening. A cough that does not automatically sound like cancer. Or something like exhaustion. The neglect of symptoms cause a delay that can become deadly.</p>
+
+  <p>By the time many patients receive scans, the disease has already spread beyond the lungs. The dataset makes this painfully clear, survival rates collapse as cancer stages advance. The tragedy is that many of these deaths are tied to timing. A few months can completely alter the outcome. Survival rises dramatically when the disease is found before it spreads.</p>
+
+  <h3>The geography of healthcare</h3>
+
+  <p>The dataset spans multiple WHO regions including Africa, Europe, the Americas, South-East Asia, Eastern Mediterranean regions, and Western Pacific regions. Although survival differences between regions are not enormous in this dataset, variations still appear, reflecting access to treatment, screening availability, healthcare infrastructure, public health investment, and environmental regulation.</p>
+
+  <p>In wealthier nations, patients may receive earlier imaging scans and more advanced therapies. In lower income areas, diagnosis may occur later due to reduced healthcare access. As cities expand and pollution rises, countries face difficult tradeoffs between economic development and public health. The air quality crisis in many cities is not only an environmental issue. It is also a cancer issue.</p>
+
+  
+  <h2>Treatment, Survival, and the Unequal Future of Cancer Care</h2>
+
+  <!-- Chart 3: Survival by treatment -->
+  <div class="figure">
+    <div class="figure-kicker">Chart 3</div>
+    <div class="figure-hed">Treatment outcomes varied significantly — and timing explains much of the gap</div>
+    <div class="chart-wrapper-tall">
+      <canvas id="treatmentChart" role="img" aria-label="Horizontal bar chart showing survival rates by treatment type">Survival rates: Surgery 65%, Surgery + Chemotherapy 52%, Radiotherapy 44%, Targeted Therapy 30%, Immunotherapy 24%, Chemotherapy shown.</canvas>
+    </div>
+    <p class="figure-caption">Approximate survival rates (%) by treatment type. Dataset: 1,500 patient records. Note: higher surgery survival rates reflect earlier-stage diagnoses, not treatment superiority alone.</p>
+  </div>
+
+  <p>Surgery showed the highest survival rates, largely because surgical candidates are often diagnosed earlier before metastasis occurs. This reveals an important truth hidden within cancer statistics: treatment success is deeply connected to timing. Patients eligible for surgery typically have localized tumors. Patients receiving immunotherapy or advanced chemotherapy often face later-stage disease. The numbers therefore reflect not only treatment quality, but how early intervention occurred.</p>
+
+  <h3>The rise of personalized medicine</h3>
+
+  <p>Modern lung cancer treatment increasingly relies on genetic testing and targeted therapies. Some patients in the dataset showed genetic mutations linked to specific treatment options. Unlike traditional chemotherapy, targeted therapies attempt to attack cancer cells more precisely while limiting damage to healthy tissue. Immunotherapy represents another major development — these treatments help the immune system recognize and attack cancer cells.</p>
+
+  <p>However, advanced therapies remain expensive. Access to personalized medicine often depends on insurance coverage, national healthcare systems, geographic location, clinical trial availability, and economic inequality. The future of lung cancer treatment may become increasingly divided between patients who can access cutting-edge therapies and those who cannot.</p>
+
+  <h3>Treatment and quality of life</h3>
+
+  <p>Cancer treatment statistics rarely capture lived experience. Charts simplify suffering into percentages and categories. But treatment changes nearly every part of daily life. Patients describe measuring energy carefully throughout the day: deciding whether walking outside is worth the exhaustion afterward, deciding whether food will stay down after chemotherapy, deciding whether they have enough breath to climb stairs.</p>
+
+  <p>Family members often become caregivers without warning. Entire households reorganize around treatment schedules, medications, insurance calls, and hospital visits. The dataset records survival in months. But survival is experienced through smaller moments:</p>
+
+  <ul class="body-list">
+    <li>A patient ringing the bell after finishing chemotherapy</li>
+    <li>Someone cutting their hair before treatment begins</li>
+    <li>A spouse learning how to manage oxygen tanks</li>
+    <li>A person discovering they can finally walk without pain again</li>
+  </ul>
+
+  <p>A chart can show survival percentages. It cannot fully show what people endure to reach them.</p>
+
+  <h3>Lung cancer and social inequality</h3>
+
+  <p>The dataset repeatedly demonstrates that lung cancer outcomes are tied to systems larger than individual behavior. People living in polluted urban centers face different risks than people in rural environments. Workers exposed to industrial hazards experience different vulnerabilities than office workers. Patients with healthcare access receive earlier diagnoses than patients without regular screening.</p>
+
+  <p>This means lung cancer reflects structural inequality. The disease disproportionately affects communities exposed to environmental danger while lacking political power to change those conditions. Historically, poorer communities have often been located closer to highways, industrial zones, factories, and polluting infrastructure — the same communities frequently facing barriers to healthcare access.</p>
+
+  <p>Reducing lung cancer rates also requires:</p>
+  <ul class="body-list">
+    <li>Cleaner air regulations</li>
+    <li>Workplace safety enforcement</li>
+    <li>Affordable healthcare access</li>
+    <li>Expanded screening programs</li>
+    <li>Anti-smoking education</li>
+    <li>Environmental accountability</li>
+  </ul>
+  <p>Without systemic change, prevention campaigns alone cannot fully address the problem.</p>
+
+  <h2>The Things People Carry Without Seeing</h2>
+
+  <p>Lung cancer remains one of the deadliest diseases in the world not simply because tumors are aggressive, but because the systems surrounding the disease are uneven. The dataset reveals several major patterns:</p>
+  <ul class="body-list">
+    <li>Smoking significantly reduces survival outcomes</li>
+    <li>Many lung cancer patients never smoked at all</li>
+    <li>Early-stage diagnosis dramatically increases survival</li>
+    <li>Treatment success depends heavily on timing and access</li>
+    <li>Environmental exposure plays a growing role in risk</li>
+  </ul>
+
+  <p>Taken together, these findings challenge simplistic narratives about the disease. Lung cancer is not only about cigarettes. It is also about air quality, labor conditions, poverty, infrastructure, public policy, and healthcare inequality.</p>
+
+  <p>The most important factor in survival often occurs before treatment even begins. Was the cancer caught early? Could the patient access screening? Did they live in an environment that exposed them to carcinogens for years? Could they afford advanced treatment?</p>
+
+  <p>These questions reveal why lung cancer remains such a difficult public health issue. The disease develops through slow accumulation: years of polluted air, years of smoking, years of unsafe work environments, years without preventative care. Many of the factors shaping diagnosis are invisible during everyday life.</p>
+
+  <div class="pull-quote">"Most people never think about the air entering their lungs every day. Until one day breathing becomes difficult."</div>
+
+  <p>The challenge moving forward is not only improving treatment, but creating environments where fewer people become sick in the first place. Public health campaigns, cleaner environmental policies, expanded healthcare access, and earlier screening programs all represent forms of prevention.</p>
+
+  <p>The future of lung cancer care depends on whether societies are willing to treat health as something shaped collectively rather than individually. Because in the end, lung cancer is not just a disease of the lungs. It is a disease of the environments people are forced to live inside.</p>
+
+  <div class="works-cited">
+    <h2>Works Cited</h2>
+    <ol>
+      <li>World Health Organization. <em>Cancer.</em> <a href="https://www.who.int" target="_blank">https://www.who.int</a></li>
+      <li>American Cancer Society. <em>Lung Cancer.</em> <a href="https://www.cancer.org" target="_blank">https://www.cancer.org</a></li>
+      <li>Centers for Disease Control and Prevention. <em>Lung Cancer.</em> <a href="https://www.cdc.gov/cancer/lung" target="_blank">https://www.cdc.gov/cancer/lung</a></li>
+      <li>Environmental Protection Agency. <em>Radon.</em> <a href="https://www.epa.gov/radon" target="_blank">https://www.epa.gov/radon</a></li>
+      <li>National Cancer Institute. <em>Lung Cancer.</em> <a href="https://www.cancer.gov" target="_blank">https://www.cancer.gov</a></li>
+      <li>Global Cancer Observatory. <a href="https://gco.iarc.fr" target="_blank">https://gco.iarc.fr</a></li>
+      <li>Lung Cancer Research Foundation. <a href="https://www.lungcancerresearchfoundation.org" target="_blank">https://www.lungcancerresearchfoundation.org</a></li>
+      <li>Mayo Clinic. <em>Lung Cancer Overview.</em> <a href="https://www.mayoclinic.org/diseases-conditions/lung-cancer" target="_blank">https://www.mayoclinic.org/diseases-conditions/lung-cancer</a></li>
+      <li>American Lung Association. <a href="https://www.lung.org" target="_blank">https://www.lung.org</a></li>
+      <li>Dataset used for analysis. <a href="https://docs.google.com/spreadsheets/d/1zmZPpyjWdi0Yhn1Oso7WKoByhdYgA3yUzkh7rtg07e0/edit?gid=1064826948#gid=1064826948" target="_blank">Google Sheets — Lung Cancer Dataset</a></li>
+    </ol>
+  </div>
+
+  <div class="tags">
+    <span class="tag">Lung cancer</span>
+    <span class="tag">Smoking</span>
+    <span class="tag">Survival rates</span>
+    <span class="tag">Oncology</span>
+    <span class="tag">Public health</span>
+    <span class="tag">NSCLC</span>
+    <span class="tag">Environmental health</span>
+  </div>
+
+  <script>
+    // Chart 1 — Survival by smoking status
+    new Chart(document.getElementById('smokingChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Never smokers', 'Former smokers', 'Current smokers'],
+        datasets: [{
+          label: 'Survival rate (%)',
+          data: [42, 32, 24],
+          backgroundColor: ['#1D9E75', '#378ADD', '#E24B4A'],
+          borderColor: ['#0F6E56', '#185FA5', '#A32D2D'],
+          borderWidth: 1, borderRadius: 4, borderSkipped: false
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: ctx => ' ' + ctx.parsed.y + '% survival rate' } }
+        },
+        scales: {
+          y: {
+            beginAtZero: true, max: 55,
+            ticks: { callback: v => v + '%', stepSize: 10, color: '#7a7670' },
+            grid: { color: 'rgba(120,118,112,0.15)' },
+            title: { display: true, text: 'Survival rate (%)', color: '#7a7670', font: { size: 12, weight: '300' } }
+          },
+          x: { ticks: { color: '#7a7670', autoSkip: false }, grid: { display: false } }
+        }
+      }
+    });
+
+    // Chart 2 — Survival by stage
+    new Chart(document.getElementById('stageChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Stage I', 'Stage II', 'Stage III', 'Stage IV'],
+        datasets: [{
+          label: 'Survival rate (%)',
+          data: [71, 50, 15, 4],
+          backgroundColor: ['#1D9E75', '#378ADD', '#EF9F27', '#E24B4A'],
+          borderColor: ['#0F6E56', '#185FA5', '#BA7517', '#A32D2D'],
+          borderWidth: 1, borderRadius: 4, borderSkipped: false
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: ctx => ' ' + ctx.parsed.y + '% survival rate' } }
+        },
+        scales: {
+          y: {
+            beginAtZero: true, max: 85,
+            ticks: { callback: v => v + '%', stepSize: 10, color: '#7a7670' },
+            grid: { color: 'rgba(120,118,112,0.15)' },
+            title: { display: true, text: 'Survival rate (%)', color: '#7a7670', font: { size: 12, weight: '300' } }
+          },
+          x: { ticks: { color: '#7a7670', autoSkip: false }, grid: { display: false } }
+        }
+      }
+    });
+
+    // Chart 3 — Survival by treatment (horizontal)
+    new Chart(document.getElementById('treatmentChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Surgery', 'Surgery + Chemo', 'Radiotherapy', 'Targeted Therapy', 'Immunotherapy', 'Chemotherapy'],
+        datasets: [{
+          label: 'Survival rate (%)',
+          data: [65, 52, 44, 30, 24, 18],
+          backgroundColor: ['#1D9E75','#378ADD','#5DCAA5','#EF9F27','#E24B4A','#D4537E'],
+          borderColor:      ['#0F6E56','#185FA5','#0F6E56','#BA7517','#A32D2D','#993556'],
+          borderWidth: 1, borderRadius: 4, borderSkipped: false
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: ctx => ' ' + ctx.parsed.x + '% survival rate' } }
+        },
+        scales: {
+          x: {
+            beginAtZero: true, max: 80,
+            ticks: { callback: v => v + '%', color: '#7a7670' },
+            grid: { color: 'rgba(120,118,112,0.15)' }
+          },
+          y: { ticks: { color: '#7a7670' }, grid: { display: false } }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
